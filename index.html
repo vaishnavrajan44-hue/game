@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- This tells the browser it's an HTML5 document -->
+<html lang="en">
+<!-- lang="en" means the page is in English -->
+<head>
+  <!-- The <head> contains info about the page (not shown on screen) -->
+  <meta charset="UTF-8">
+  <!-- UTF-8 lets us use any characters (emojis, accents, etc.) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- This makes the site look good on phones and tablets -->
+  <title>Click Speed Test</title>
+  <!-- The title shows up on the browser tab -->
+  <link rel="stylesheet" href="style.css">
+  <!-- This connects our CSS file so the page looks styled -->
+</head>
+<body>
+  <!-- The <body> contains everything the user sees on screen -->
+
+  <div class="container">
+    <!-- A wrapper box that centers everything and sets a max width -->
+
+    <!-- ========================================================== -->
+    <!-- LANDING SCREEN - the first thing the player sees            -->
+    <!-- ========================================================== -->
+    <div id="landing" class="screen">
+      <h1>Click Speed Test</h1>
+      <!-- <h1> is the main heading, usually the biggest text -->
+      <p>How fast can you click? You have <strong>10 seconds</strong>.</p>
+      <!-- <p> is a paragraph. <strong> makes text bold. -->
+      <button id="startBtn" class="btn">Start Game</button>
+      <!-- <button> creates a clickable button. id is used by JavaScript -->
+      <p class="high-score">High Score: <span id="landingHighScore">0</span></p>
+      <!-- <span> is for inline text we want to change with JavaScript -->
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- GAME SCREEN - where the clicking happens                   -->
+    <!-- ========================================================== -->
+    <div id="game" class="screen hidden">
+      <!-- class="hidden" hides this screen at first -->
+      <div class="stats">
+        <!-- This row holds the timer and score boxes side by side -->
+        <div class="stat">
+          <span class="stat-label">Time</span>
+          <span id="timer" class="stat-value">10</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Score</span>
+          <span id="score" class="stat-value">0</span>
+        </div>
+      </div>
+      <button id="clickBtn" class="btn click-btn">Click Me!</button>
+      <!-- This is the BIG button the player keeps clicking -->
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- GAME OVER SCREEN - shows after the timer runs out           -->
+    <!-- ========================================================== -->
+    <div id="gameOver" class="screen hidden">
+      <h1>Game Over!</h1>
+      <p class="final-score">Your Score: <span id="finalScore">0</span></p>
+      <p class="high-score">High Score: <span id="gameOverHighScore">0</span></p>
+      <button id="playAgainBtn" class="btn">Play Again</button>
+    </div>
+
+  </div>
+  <!-- End of .container -->
+
+  <script src="script.js"></script>
+  <!-- This connects our JavaScript file -->
+</body>
+</html>
