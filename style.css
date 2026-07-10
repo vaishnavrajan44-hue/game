@@ -1,0 +1,281 @@
+/*
+  CSS stands for Cascading Style Sheets.
+  It controls how the page LOOKS: colors, sizes, spacing, animations.
+  
+  RULE STRUCTURE:
+    selector {
+      property: value;
+    }
+  
+  Example:
+    h1 {
+      color: red;
+    }
+  This says: "Make ALL <h1> elements red."
+*/
+
+/* ========================================================== */
+/* 1. RESET & BASE STYLES                                      */
+/*    These apply to EVERYTHING on the page.                   */
+/* ========================================================== */
+
+/* The * selector means "every element on the page" */
+*, *::before, *::after {
+  margin: 0;
+  /* Removes default space AROUND elements */
+  padding: 0;
+  /* Removes default space INSIDE elements */
+  box-sizing: border-box;
+  /* Makes width/height include padding & border (easier to size things) */
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* Sets the text font. The browser picks the first one it has. */
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  /* A gradient that smoothly blends from dark purple to a lighter purple.
+     135deg means diagonal. #0f0c29 is a hex color code. */
+  min-height: 100vh;
+  /* vh = viewport height. 100vh means "at least as tall as the screen" */
+  display: flex;
+  /* Flexbox makes it easy to center things */
+  justify-content: center;
+  /* Centers content horizontally */
+  align-items: center;
+  /* Centers content vertically */
+  color: #fff;
+  /* #fff is short for #ffffff, which is white */
+}
+
+/* ========================================================== */
+/* 2. CONTAINER                                               */
+/*    Wraps everything so it doesn't get too wide on big      */
+/*    screens.                                                */
+/* ========================================================== */
+.container {
+  width: 100%;
+  /* Takes up all the space it can, up to max-width */
+  max-width: 480px;
+  /* Won't get wider than 480 pixels (good for phones too) */
+  padding: 2rem;
+  /* 2rem = 2x the font size. Adds breathing room inside the box. */
+}
+
+/* ========================================================== */
+/* 3. SCREENS                                                 */
+/*    Each screen (landing, game, game-over) is shown/hidden  */
+/*    by JavaScript adding/removing the "hidden" class.       */
+/* ========================================================== */
+.screen {
+  text-align: center;
+  /* Centers the text inside */
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  /* Smooth fade in/out when shown/hidden (not fully used here) */
+}
+
+.screen.hidden {
+  display: none;
+  /* display: none completely removes the element from the page */
+}
+
+/* ========================================================== */
+/* 4. LANDING SCREEN                                          */
+/*    Styles for the first page the player sees.              */
+/* ========================================================== */
+h1 {
+  font-size: 2.2rem;
+  /* 2.2x the base font size. Makes the heading big. */
+  margin-bottom: 0.75rem;
+  /* Space below the heading */
+}
+
+#landing p {
+  font-size: 1.1rem;
+  color: #ccc;
+  /* Light gray text (lighter than white) */
+  margin-bottom: 1.5rem;
+}
+
+/* ========================================================== */
+/* 5. BUTTONS (GENERAL)                                       */
+/*    Styles that apply to ALL buttons on the page.           */
+/* ========================================================== */
+.btn {
+  display: inline-block;
+  /* Allows padding and margins to work correctly on a button */
+  padding: 1rem 2.5rem;
+  /* Space inside: 1rem top/bottom, 2.5rem left/right */
+  font-size: 1.2rem;
+  font-weight: 600;
+  /* 600 is semi-bold (between normal and bold) */
+  color: #fff;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  /* A blue-to-purple gradient background */
+  border: none;
+  /* Removes the default button border */
+  border-radius: 50px;
+  /* Rounds the corners. 50px is big enough to make pill shapes. */
+  cursor: pointer;
+  /* Changes the mouse to a hand icon when hovering */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* Smooth animation when hovering or clicking */
+}
+
+.btn:hover {
+  /* :hover applies when the mouse is over the element */
+  transform: translateY(-3px);
+  /* Lifts the button up by 3 pixels */
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  /* Adds a blue-ish shadow below the button (makes it look 3D) */
+}
+
+.btn:active {
+  /* :active applies while the mouse button is held down */
+  transform: translateY(0);
+  /* Pushes the button back down (press effect) */
+}
+
+/* ========================================================== */
+/* 6. CLICK BUTTON (the big round one)                        */
+/*    Special styles just for the main "Click Me!" button.    */
+/* ========================================================== */
+.click-btn {
+  width: 220px;
+  height: 220px;
+  /* Makes it a large square (we'll round it into a circle next) */
+  font-size: 1.8rem;
+  border-radius: 50%;
+  /* 50% border-radius turns a square into a circle */
+  margin-top: 1rem;
+  /* Space above the button */
+  animation: pulse 0.4s ease-in-out infinite;
+  /* 
+    animation: name duration timing-function iteration-count
+    "pulse" is defined below (it slowly grows and shrinks)
+    "infinite" means it loops forever
+  */
+}
+
+.click-btn:active {
+  animation: clickPop 0.04s ease;
+  /* When pressed, play a quick "shrink then pop back" animation */
+}
+
+/*
+  @keyframes defines a custom animation.
+  You describe what the element looks like at different points
+  during the animation (0% = start, 100% = end).
+*/
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  /* At the start and end: normal size (1x) */
+  50% { transform: scale(1.06); }
+  /* At the halfway point: slightly bigger (1.06x) */
+}
+
+@keyframes clickPop {
+  0% { transform: scale(0.88); }
+  /* The moment you click: button shrinks to 88% */
+  100% { transform: scale(1); }
+  /* It pops back to full size instantly */
+}
+
+/* ========================================================== */
+/* 7. STATS (timer and score boxes)                           */
+/* ========================================================== */
+.stats {
+  display: flex;
+  /* Places the .stat boxes side by side horizontally */
+  justify-content: space-around;
+  /* Spaces them evenly with room on the sides */
+  margin-bottom: 2rem;
+}
+
+.stat {
+  background: rgba(255, 255, 255, 0.1);
+  /* White at 10% opacity = a very faint white box */
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  min-width: 120px;
+  backdrop-filter: blur(4px);
+  /* Blurs whatever is behind the box (glass effect) */
+}
+
+.stat-label {
+  display: block;
+  /* Makes the span behave like a block (puts it on its own line) */
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  /* Makes the text ALL CAPS */
+  letter-spacing: 1px;
+  /* Adds space between letters */
+  color: #aaa;
+  /* Light gray */
+}
+
+.stat-value {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  /* 700 = bold */
+  margin-top: 0.25rem;
+  /* Small gap between the label and the number */
+}
+
+/* ========================================================== */
+/* 8. HIGH SCORE                                              */
+/* ========================================================== */
+.high-score {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: #aaa;
+}
+
+.high-score span {
+  color: #f7b731;
+  /* Gold/yellow color for the number */
+  font-weight: 700;
+}
+
+/* ========================================================== */
+/* 9. GAME OVER SCREEN                                        */
+/* ========================================================== */
+.final-score {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
+/* ========================================================== */
+/* 10. RESPONSIVE DESIGN                                       */
+/*     This makes the site look good on small screens.         */
+/*     @media queries only apply when the condition is met.    */
+/* ========================================================== */
+@media (max-width: 500px) {
+  /* If the screen is 500px wide or smaller, use these styles */
+
+  .container {
+    padding: 1rem;
+    /* Less padding on small screens so nothing gets cut off */
+  }
+
+  h1 {
+    font-size: 1.6rem;
+    /* Smaller heading on phones */
+  }
+
+  .click-btn {
+    width: 160px;
+    height: 160px;
+    font-size: 1.3rem;
+    /* Smaller circle on phones */
+  }
+
+  .stat {
+    min-width: 90px;
+    padding: 0.75rem 1rem;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+  }
+}
